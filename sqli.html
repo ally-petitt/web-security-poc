@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input {
+      min-width: 500px;
+      max-width: 80vw;
+      padding: 5px 2px;
+      text-align: center;
+    }
+
+    #complete-query {
+      font-family: monospace;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    button {
+      padding: 2px 4px;
+      letter-spacing: 1px;
+      font-size: 12px;
+    }
+  </style>
+
+  <body>
+    <form id="form">
+      <label for="user-input">Enter your malicious SQL Injection Payload</label><br />
+      <input type="text" name="user-input" id="user-input" value="' OR 1=1--" /><br />
+      <label for="sql-query">Change the SQL query (optional)</label><br />
+      <input
+        type="text"
+        name="sql-query"
+        id="sql-query"
+        value="SELECT * FROM users WHERE username = '[USER_INPUT]' AND password = ''"
+      /><br />
+      <button type="submit">Show Complete Query</button>
+    </form>
+
+    <p id="complete-query"></p>
+  </body>
+
+  <script>
+    document.getElementById("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      //   get value of input fields
+      const userInput = document.getElementById("user-input").value;
+      let sqlQuery = document.getElementById("sql-query").value;
+
+      sqlQuery = sqlQuery.replace("[USER_INPUT]", userInput);
+
+      document.getElementById("complete-query").innerText = sqlQuery;
+    });
+  </script>
+</html>
